@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #8a2be2;
+        }
+        .sentence-display {
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        #englishSentence {
+            font-style: italic;
+        }
+        #japaneseSentence {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #8a2be2;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #6a1aab;
+        }
+        .home-link {
+            display: block;
+            margin-top: 20px;
+            color: #8a2be2;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Japanese Sentence Practice 📝</h1>
+        <p>Click the button to reveal a new sentence.</p>
+        <div class="sentence-display">
+            <div id="englishSentence">Click "New Sentence" to begin.</div>
+            <div id="japaneseSentence"></div>
+        </div>
+        <button onclick="displayNewSentence()">New Sentence</button>
+        <a href="index.html" class="home-link">Back to Home</a>
+    </div>
+
+    <script>
+        const sentences = [
+            { english: "Where is the bathroom?", japanese: "お手洗いはどこですか？ (Otearai wa doko desu ka?)" },
+            { english: "How much is this?", japanese: "これはいくらですか？ (Kore wa ikura desu ka?)" },
+            { english: "I don't understand.", japanese: "分かりません。 (Wakarimasen.)" },
+            { english: "Can you speak slowly?", japanese: "ゆっくり話してください。 (Yukkuri hanashite kudasai.)" },
+            { english: "What time is it now?", japanese: "今、何時ですか？ (Ima, nanji desu ka?)" },
+            { english: "I am hungry.", japanese: "お腹が空きました。 (Onaka ga sukimashita.)" },
+            { english: "Where is the train station?", japanese: "駅はどこですか？ (Eki wa doko desu ka?)" },
+            { english: "Excuse me, what is your name?", japanese: "すみません、お名前は何ですか？ (Sumimasen, onamae wa nan desu ka?)" },
+            { english: "I am looking for a restaurant.", japanese: "レストランを探しています。 (Resutoran o sagashite imasu.)" },
+            { english: "What is this?", japanese: "これは何ですか？ (Kore wa nan desu ka?)" },
+            { english: "It's a beautiful day.", japanese: "いい天気ですね。 (Ii tenki desu ne.)" },
+            { english: "I am going to the supermarket.", japanese: "スーパーに行きます。 (Sūpā ni ikimasu.)" },
+            { english: "Please wait a moment.", japanese: "ちょっと待ってください。 (Chotto matte kudasai.)" },
+            { english: "Can you help me?", japanese: "手伝ってくれませんか？ (Tetsudatte kuremasen ka?)" },
+            { english: "I like sushi.", japanese: "寿司が好きです。 (Sushi ga suki desu.)" },
+            { english: "Let's go together.", japanese: "一緒に行きましょう。 (Issho ni ikimashō.)" },
+            { english: "I am a student.", japanese: "私は学生です。 (Watashi wa gakusei desu.)" },
+            { english: "How do you do?", japanese: "お元気ですか？ (Ogenki desu ka?)" },
+            { english: "I want to eat ramen.", japanese: "ラーメンが食べたいです。 (Rāmen ga tabetai desu.)" },
+            { english: "Where is the nearest convenience store?", japanese: "一番近いコンビニはどこですか？ (Ichiban chikai konbini wa doko desu ka?)" },
+            { english: "It's getting cold.", japanese: "寒くなってきました。 (Samuku natte kimashita.)" },
+            { english: "I am sorry.", japanese: "ごめんなさい。 (Gomennasai.)" },
+            { english: "Nice to meet you.", japanese: "はじめまして。 (Hajimemashite.)" },
+            { english: "Let's eat.", japanese: "食べましょう。 (Tabemashō.)" },
+            { english: "What are you doing?", japanese: "何をしていますか？ (Nani o shite imasu ka?)" },
+            { english: "Please give me water.", japanese: "お水をください。 (O-mizu o kudasai.)" },
+            { english: "I am tired.", japanese: "疲れました。 (Tsukaremashita.)" },
+            { english: "This is delicious.", japanese: "これは美味しいです。 (Kore wa oishii desu.)" },
+            { english: "Thank you for the meal.", japanese: "ごちそうさまでした。 (Gochisousama deshita.)" },
+            { english: "I'll be back.", japanese: "行ってきます。 (Ittekimasu.)" },
+            { english: "I'm home.", japanese: "ただいま。 (Tadaima.)" },
+            { english: "Welcome home.", japanese: "おかえりなさい。 (Okaerinasai.)" },
+            { english: "I will go.", japanese: "行きます。 (Ikimasu.)" },
+            { english: "Let's meet tomorrow.", japanese: "明日、会いましょう。 (Ashita, aimashō.)" },
+            { english: "How old are you?", japanese: "おいくつですか？ (Oikutsu desu ka?)" },
+            { english: "I am 20 years old.", japanese: "私は二十歳です。 (Watashi wa hatachi desu.)" },
+            { english: "What is your hobby?", japanese: "ご趣味は何ですか？ (Go shumi wa nan desu ka?)" },
+            { english: "My hobby is reading.", japanese: "私の趣味は読書です。 (Watashi no shumi wa dokusho desu.)" },
+            { english: "Do you have any recommendations?", japanese: "何かおすすめはありますか？ (Nanika osusume wa arimasu ka?)" },
+            { english: "Where are you from?", japanese: "ご出身はどちらですか？ (Go shusshin wa dochira desu ka?)" },
+            { english: "I am from America.", japanese: "アメリカ出身です。 (Amerika shusshin desu.)" },
+            { english: "I like dogs.", japanese: "犬が好きです。 (Inu ga suki desu.)" },
+            { english: "I don't like cats.", japanese: "猫は好きではありません。 (Neko wa suki dewa arimasen.)" },
+            { english: "The movie was fun.", japanese: "映画は面白かったです。 (Eiga wa omoshirokatta desu.)" },
+            { english: "Can I take a photo?", japanese: "写真を撮ってもいいですか？ (Shashin o totte mo ii desu ka?)" },
+            { english: "I have a question.", japanese: "質問があります。 (Shitsumon ga arimasu.)" },
+            { english: "It's so hot today.", japanese: "今日はとても暑いですね。 (Kyō wa totemo atsui desu ne.)" },
+            { english: "I feel sick.", japanese: "気分が悪いです。 (Kibun ga warui desu.)" },
+            { english: "Is this correct?", japanese: "これで合っていますか？ (Kore de atte imasu ka?)" },
+            { english: "I am looking for a gift.", japanese: "お土産を探しています。 (Omiyage o sagashite imasu.)" },
+            { english: "What do you want to do?", japanese: "何をしたいですか？ (Nani o shitai desu ka?)" },
+            { english: "Let's practice Japanese.", japanese: "日本語を練習しましょう。 (Nihongo o renshū shimashō.)" },
+            { english: "It's hard, but fun.", japanese: "難しいけど、楽しいです。 (Muzukashii kedo, tanoshii desu.)" },
+            { english: "I am busy today.", japanese: "今日は忙しいです。 (Kyō wa isogashii desu.)" },
+            { english: "I will be careful.", japanese: "気をつけます。 (Ki o tsukemasu.)" },
+            { english: "What kind of music do you like?", japanese: "どんな音楽が好きですか？ (Donna ongaku ga suki desu ka?)" },
+            { english: "I am looking for a job.", japanese: "仕事を探しています。 (Shigoto o sagashite imasu.)" },
+            { english: "I love you.", japanese: "愛しています。 (Aishite imasu.)" },
+            { english: "The food is amazing!", japanese: "料理が最高です！ (Ryōri ga saikō desu!)" },
+            { english: "I need to go home soon.", japanese: "そろそろ家に帰らなければ。 (Sorosoro ie ni kaeranakereba.)" },
+            { english: "Do you have siblings?", japanese: "ご兄弟はいますか？ (Go kyōdai wa imasu ka?)" },
+            { english: "I have an older brother.", japanese: "兄がいます。 (Ani ga imasu.)" },
+            { english: "How do you say this in Japanese?", japanese: "これは日本語で何と言いますか？ (Kore wa nihongo de nan to iimasu ka?)" },
+            { english: "The weather is nice today.", japanese: "今日は天気がいいですね。 (Kyō wa tenki ga ii desu ne.)" },
+            { english: "I want to travel.", japanese: "旅行に行きたいです。 (Ryokō ni ikitai desu.)" },
+            { english: "I will take this.", japanese: "これをください。 (Kore o kudasai.)" },
+            { english: "Can you say that again?", japanese: "もう一度言ってくれますか？ (Mō ichido itte kuremasu ka?)" },
+            { english: "I am here for sightseeing.", japanese: "観光に来ました。 (Kankō ni kimashita.)" },
+            { english: "I have a reservation.", japanese: "予約しています。 (Yoyaku shite imasu.)" },
+            { english: "Where is the post office?", japanese: "郵便局はどこですか？ (Yūbinkyoku wa doko desu ka?)" },
+            { english: "I'm sorry, I'm late.", japanese: "遅れてすみません。 (Okurete sumimasen.)" },
+            { english: "I'm glad to see you.", japanese: "お会いできて嬉しいです。 (O-ai dekite ureshii desu.)" },
+            { english: "It's my treat.", japanese: "私のおごりです。 (Watashi no ogori desu.)" },
+            { english: "Let's take a break.", japanese: "休憩しましょう。 (Kyūkei shimashō.)" },
+            { english: "Is everything okay?", japanese: "大丈夫ですか？ (Daijōbu desu ka?)" },
+            { english: "I'm looking forward to it.", japanese: "楽しみにしています。 (Tanoshimi ni shite imasu.)" },
+            { english: "I'm going to sleep.", japanese: "寝ます。 (Nemasu.)" },
+            { english: "Good night.", japanese: "おやすみ。 (Oyasumi.)" },
+            { english: "What's the matter?", japanese: "どうしましたか？ (Dō shimashita ka?)" },
+            { english: "I will call you later.", japanese: "後で電話します。 (Ato de denwa shimasu.)" },
+            { english: "Please give me a receipt.", japanese: "領収書をください。 (Ryōshūsho o kudasai.)" },
+            { english: "I will pay with cash.", japanese: "現金で払います。 (Genkin de haraimasu.)" },
+            { english: "I am lost.", japanese: "道に迷いました。 (Michi ni mayoi mashita.)" },
+            { english: "Please write it down.", japanese: "書いてください。 (Kaite kudasai.)" },
+            { english: "I want to learn Japanese.", japanese: "日本語を習いたいです。 (Nihongo o naritai desu.)" },
+            { english: "I live in Tokyo.", japanese: "東京に住んでいます。 (Tōkyō ni sunde imasu.)" },
+            { english: "It's a secret.", japanese: "秘密です。 (Himitsu desu.)" },
+            { english: "Happy Birthday!", japanese: "お誕生日おめでとうございます！ (O-tanjōbi omedetō gozaimasu!)" },
+            { english: "Can I use a credit card?", japanese: "クレジットカードを使えますか？ (Kurejitto kādo o tsukae masuka?)" },
+            { english: "I am a foreigner.", japanese: "私は外国人です。 (Watashi wa gaikokujin desu.)" },
+            { english: "I am going to work.", japanese: "仕事に行きます。 (Shigoto ni ikimasu.)" },
+            { english: "How long does it take?", japanese: "どのくらいかかりますか？ (Dono kurai kakarimasu ka?)" },
+            { english: "I am here alone.", japanese: "一人で来ました。 (Hitori de kimashita.)" },
+            { english: "It is very delicious.", japanese: "とても美味しいです。 (Totemo oishii desu.)" },
+            { english: "I like watching movies.", japanese: "映画を見るのが好きです。 (Eiga o miru no ga suki desu.)" },
+            { english: "I'm sorry, I cannot go.", japanese: "ごめんなさい、行けません。 (Gomennasai, ikemasen.)" },
+            { english: "Let's drink something.", japanese: "何か飲みましょう。 (Nanika nomimashō.)" },
+            { english: "I need to buy a ticket.", japanese: "切符を買わなければいけません。 (Kippu o kawanakereba ikemasen.)" },
+            { english: "I want to try it.", japanese: "試してみたいです。 (Tameshite mitai desu.)" },
+            { english: "What is your favorite food?", japanese: "好きな食べ物は何ですか？ (Sukina tabemono wa nan desu ka?)" },
+            { english: "The train is late.", japanese: "電車が遅れています。 (Densha ga okurete imasu.)" },
+            { english: "I'm not good at speaking Japanese.", japanese: "日本語を話すのが苦手です。 (Nihongo o hanasu no ga nigate desu.)" },
+            { english: "Please speak a little louder.", japanese: "もう少し大きな声で話してください。 (Mō sukoshi ōkina koe de hanashite kudasai.)" },
+            { english: "I will be careful.", japanese: "気をつけます。 (Ki o tsukemasu.)" },
+            { english: "It's my first time here.", japanese: "ここに来るのは初めてです。 (Koko ni kuru no wa hajimete desu.)" },
+            { english: "Let's go to a cafe.", japanese: "喫茶店に行きましょう。 (Kissaten ni ikimashō.)" },
+            { english: "I am a beginner.", japanese: "初心者です。 (Shoshinsha desu.)" },
+            { english: "I'm looking forward to it.", japanese: "楽しみにしています。 (Tanoshimi ni shite imasu.)" },
+        ];
+
+        let lastIndex = -1;
+        const englishSentenceDiv = document.getElementById('englishSentence');
+        const japaneseSentenceDiv = document.getElementById('japaneseSentence');
+
+        function displayNewSentence() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * sentences.length);
+            } while (randomIndex === lastIndex);
+
+            const sentence = sentences[randomIndex];
+            englishSentenceDiv.textContent = sentence.english;
+            japaneseSentenceDiv.textContent = sentence.japanese;
+            lastIndex = randomIndex;
+        }
+
+        // Initial call to start
+        window.onload = displayNewSentence;
+    </script>
+</body>
+</html>
