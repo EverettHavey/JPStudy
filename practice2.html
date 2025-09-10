@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katakana Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .char-container {
+            font-size: 3em;
+            margin: 20px 0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        #katakanaChar {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #007bff;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .home-link {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Katakana Practice 🔷</h1>
+        <p>Type the romaji for the character below.</p>
+        <div class="char-container">
+            <span id="katakanaChar">ア</span>
+        </div>
+        <input type="text" id="userInput" placeholder="Type your answer here..." onkeypress="checkEnter(event)">
+        <button onclick="checkAnswer()">Submit</button>
+        <div id="message" class="message"></div>
+        <a href="index.html" class="home-link">Back to Home</a>
+    </div>
+
+    <script>
+        const katakanaMap = {
+            'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
+            'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
+            'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
+            'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'テ': 'te', 'ト': 'to',
+            'ナ': 'na', 'ニ': 'ni', 'ヌ': 'nu', 'ネ': 'ne', 'ノ': 'no',
+            'ハ': 'ha', 'ヒ': 'hi', 'フ': 'fu', 'ヘ': 'he', 'ホ': 'ho',
+            'マ': 'ma', 'ミ': 'mi', 'ム': 'mu', 'メ': 'me', 'モ': 'mo',
+            'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo',
+            'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro',
+            'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n',
+        };
+
+        let currentKatakana;
+        const keys = Object.keys(katakanaMap);
+        const charSpan = document.getElementById('katakanaChar');
+        const userInput = document.getElementById('userInput');
+        const messageDiv = document.getElementById('message');
+
+        function getRandomKatakana() {
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            currentKatakana = keys[randomIndex];
+            charSpan.textContent = currentKatakana;
+            userInput.value = '';
+            messageDiv.textContent = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = userInput.value.trim().toLowerCase();
+            const correctAnswer = katakanaMap[currentKatakana];
+            if (userAnswer === correctAnswer) {
+                messageDiv.textContent = 'Correct! ✅';
+                messageDiv.className = 'message correct';
+                setTimeout(getRandomKatakana, 1500);
+            } else {
+                messageDiv.textContent = `Incorrect. The correct answer is "${correctAnswer}". ❌`;
+                messageDiv.className = 'message incorrect';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        }
+
+        // Initial call to start the practice
+        window.onload = getRandomKatakana;
+    </script>
+</body>
+</html>

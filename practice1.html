@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiragana Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .char-container {
+            font-size: 3em;
+            margin: 20px 0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        #hiraganaChar {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #4CAF50;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .home-link {
+            display: block;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hiragana Practice 🌸</h1>
+        <p>Type the romaji for the character below.</p>
+        <div class="char-container">
+            <span id="hiraganaChar">あ</span>
+        </div>
+        <input type="text" id="userInput" placeholder="Type your answer here..." onkeypress="checkEnter(event)">
+        <button onclick="checkAnswer()">Submit</button>
+        <div id="message" class="message"></div>
+        <a href="index.html" class="home-link">Back to Home</a>
+    </div>
+
+    <script>
+        const hiraganaMap = {
+            'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
+            'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
+            'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so',
+            'た': 'ta', 'ち': 'chi', 'つ': 'tsu', 'て': 'te', 'と': 'to',
+            'な': 'na', 'に': 'ni', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no',
+            'は': 'ha', 'ひ': 'hi', 'ふ': 'fu', 'へ': 'he', 'ほ': 'ho',
+            'ま': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo',
+            'や': 'ya', 'ゆ': 'yu', 'よ': 'yo',
+            'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
+            'わ': 'wa', 'を': 'wo', 'ん': 'n',
+        };
+
+        let currentHiragana;
+        const keys = Object.keys(hiraganaMap);
+        const charSpan = document.getElementById('hiraganaChar');
+        const userInput = document.getElementById('userInput');
+        const messageDiv = document.getElementById('message');
+
+        function getRandomHiragana() {
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            currentHiragana = keys[randomIndex];
+            charSpan.textContent = currentHiragana;
+            userInput.value = '';
+            messageDiv.textContent = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = userInput.value.trim().toLowerCase();
+            const correctAnswer = hiraganaMap[currentHiragana];
+            if (userAnswer === correctAnswer) {
+                messageDiv.textContent = 'Correct! ✅';
+                messageDiv.className = 'message correct';
+                setTimeout(getRandomHiragana, 1500);
+            } else {
+                messageDiv.textContent = `Incorrect. The correct answer is "${correctAnswer}". ❌`;
+                messageDiv.className = 'message incorrect';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        }
+        
+        // Initial call to start the practice
+        window.onload = getRandomHiragana;
+    </script>
+</body>
+</html>
